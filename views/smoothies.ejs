@@ -1,0 +1,23 @@
+<%- include('partials/header'); -%>
+<h2 class="all">My Recipies</h2>
+<ul class="recipes">
+  <%if(prods.length > 0){%>
+    <% prods.forEach((prod) => { %>
+      <%if(prod.user_email === user.email){%>
+       
+  <li class="recipe">
+    <a class="recipe-h" href="/smoothies/<%=prod._id%>">
+    <img src="/smoothie.png" alt="smoothie recipe icon">
+    <h4><%= prod.productName%></h4>
+    <p><%= prod.description%></p>
+  </a>
+  </li>
+
+  <%}%>
+  <%})%>
+  <%}else{%>
+    <p>No products to dislay</p>
+    <%}%>
+</ul>
+
+<%- include('partials/footer'); -%>

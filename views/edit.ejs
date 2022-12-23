@@ -1,0 +1,36 @@
+<html lang="en">
+<body>
+    <%- include('partials/header'); -%>
+ 
+    <div class="form-container">
+        <form class="create">
+            <h1 class="all orange">Edit Recipe</h1>
+            <label for="productName">Title</label>
+            <input type="text" name="productName" value = "<%=prod.productName%> "required>
+            <label for="description">Snippet</label>
+            <input type="text"name="description" value = "<%=prod.description%>" required>
+            <label for="body">Recipe</label>
+            <textarea name="body" id="body" cols="30" rows="10"><%=prod.body%></textarea>
+            <button class="btn-orange"   type="submit">Update</button>
+        </form>
+    </div>
+    <script>
+        const form = document.querySelector('form')
+        form.addEventListener('submit',async (e)=>{
+            e.preventDefault()
+
+            const productName = form.productName.value;
+            const description = form.description.value;
+            const body = form.body.value;
+
+           const result = await fetch('/smoothies/<%= prod._id%>',{
+                method:'PUT',
+                body: JSON.stringify({productName, description,body}),
+                headers: {'Content-Type':'application/json'}
+            })
+                window.location.href = '/smoothies/<%= prod._id%>';
+        })
+    </script>
+    <%- include('partials/footer'); -%>
+</body>
+</html>

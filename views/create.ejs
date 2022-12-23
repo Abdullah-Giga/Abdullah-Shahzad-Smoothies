@@ -1,0 +1,43 @@
+<html lang="en">
+<body>
+    <%- include('partials/header'); -%>
+    </nav>
+    <div class="form-container">
+        <form class="create">
+            <h1 class="all">Add a New Recipe</h1>
+            <label for="productName">Title</label>
+            <input type="text" name="productName" required>
+            <label for="description">Snippet</label>
+            <input type="text"name="description" required>
+            <label for="body">Recipe</label>
+            <textarea name="body" id="body" cols="30" rows="10"></textarea>
+            <input type="text" name = "userEmail" hidden value=<%=user.email%>>
+            <button type="submit">Add</button>
+        </form>
+    </div>
+    <script>
+        const form = document.querySelector('form')
+        form.addEventListener('submit',async (e)=>{
+            e.preventDefault()
+
+            const productName = form.productName.value;
+            const description = form.description.value;
+            const body = form.body.value;
+            const user_email = form.userEmail.value;
+
+           const result = await  fetch('/smoothies',{
+                method:'POST',
+                body: JSON.stringify({productName, description,body, user_email}),
+                headers: {'Content-Type':'application/json'}
+            })
+            const data = await result.json()
+            if(data.result){
+                window.location.href = '/smoothies';
+            }else{
+                console.log("Error Saving data");
+            }
+        })
+    </script>
+    <%- include('partials/footer'); -%>
+</body>
+</html>
