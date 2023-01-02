@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+require('dotenv').config();
+
 
 // Checking if the user accessing a specific route is logged in or not
 const requireAuth = (req, res, next) => {
@@ -7,7 +9,7 @@ const requireAuth = (req, res, next) => {
   // check if jwt exixts
   if (token) {
     // checking if it is valid
-    jwt.verify(token, "my-secret-Secret", (error, decodedToken) => {
+    jwt.verify(token, process.env.SECRET, (error, decodedToken) => {
       // checking if the token has been tampered with
       if (error) {
         console.log(error);
@@ -31,7 +33,7 @@ const checkUser = (req, res, next) => {
   // check if jwt exixts
   if (token) {
     // checking if it is valid
-    jwt.verify(token, "my-secret-Secret", async (error, decodedToken) => {
+    jwt.verify(token, process.env.SECRET, async (error, decodedToken) => {
       // checking if the token has been tampered with
       if (error) {
         console.log(error.message);

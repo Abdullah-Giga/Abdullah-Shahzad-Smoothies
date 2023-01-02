@@ -1,39 +1,39 @@
 const { JsonWebTokenError } = require('jsonwebtoken');
 const Product = require('../models/smoothies');
 
-// Get all products
-module.exports.getProds = (req, res) => {
+// Get my products
+const MyProds_get = (req, res) => {
     Product.find().sort({createdAt: -1}).then((result) => res.render('smoothies', {prods : result})).catch((err) => console.log(err));
 }
 
-module.exports.getAllProds = (req, res) => {
+const AllProds_get = (req, res) => {
     Product.find().sort({createdAt: -1}).then((result) => res.render('allProds', {prods : result})).catch((err) => console.log(err));
 }
 
-module.exports.render_createNew = (req, res) => {
+const createNew = (req, res) => {
     res.render('create');
 }
 
-module.exports.createNew = async (req, res) => {
+const createNew_post = async (req, res) => {
     const product = new Product(req.body);
     product.save().then((result) => res.send({result})).catch((err) => console.log(err));
 }
 
 
-module.exports.render_details = (req, res) => {
+const details = (req, res) => {
     const id = req.params.id;
     Product.findById(id).then((result) => res.render('details', {prod : result})).catch((err) => console.log(err));
 }
 
 
-module.exports.render_edit = (req, res) => {
+const edit = (req, res) => {
     const id = req.params.id;
     Product.findById(id).then((result) => res.render('edit', {prod : result})).catch((err) => console.log(err));
 }
 
 
 
-module.exports.editRecipe = (req, res) => {
+const editRecipe_post = (req, res) => {
     const id = req.params.id;
 
          Product.findByIdAndUpdate(id,{
@@ -46,7 +46,9 @@ module.exports.editRecipe = (req, res) => {
         }
 
 
-module.exports.deleteRecipe = (req, res) => {
+const deleteRecipe = (req, res) => {
     const id = req.params.id;
     Product.findByIdAndDelete(id).then((result) => res.json({redirect : '/smoothies'})).catch((err) => console.log(err));
 }
+
+module.exports = {MyProds_get, AllProds_get, createNew, createNew_post, details, edit, editRecipe_post, deleteRecipe};

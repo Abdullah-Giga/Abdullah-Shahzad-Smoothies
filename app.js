@@ -4,6 +4,8 @@ const authRoutes = require("./routes/authRoutes");
 const prodRoutes = require('./routes/prodRoutes');
 const cookieParser = require("cookie-parser");
 const { requireAuth, checkUser } = require("./middlewares/authMiddleware");
+require('dotenv').config();
+
 
 const app = express();
 
@@ -16,10 +18,9 @@ app.use(cookieParser());
 app.set("view engine", "ejs");
 
 // Server connection port and mondoDB connection string
-const port = 5000;
-const uri =
-  "mongodb+srv://Admin:Admin123@cluster0.wdrmawy.mongodb.net/?retryWrites=true&w=majority";
-
+const port = process.env.PORT;
+const uri = process.env.DBURI;
+  
 // connecting mongoDB and starting server
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })

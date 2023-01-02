@@ -1,23 +1,23 @@
 const { Router } = require("express");
-const prodController = require("../controllers/productController");
+const {MyProds_get, AllProds_get, createNew, createNew_post, details, edit, editRecipe_post, deleteRecipe} = require("../controllers/productController");
 const { requireAuth, checkUser } = require("../middlewares/authMiddleware");
 
 const router = Router();
 
-router.get('/smoothies', requireAuth,prodController.getProds);
+router.get('/smoothies', requireAuth,MyProds_get);
 
-router.get('/smoothies/all', prodController.getAllProds);
+router.get('/smoothies/all', requireAuth,AllProds_get);
 
-router.get('/smoothies/new', requireAuth, prodController.render_createNew);
+router.get('/smoothies/new', requireAuth, createNew);
 
-router.get('/smoothies/:id',  prodController.render_details);
+router.get('/smoothies/:id',requireAuth,  details);
 
-router.post('/smoothies', requireAuth, prodController.createNew);
+router.post('/smoothies', requireAuth, createNew_post);
 
-router.get('/smoothies/edit/:id', requireAuth, prodController.render_edit);
+router.get('/smoothies/edit/:id', requireAuth, edit);
 
-router.put('/smoothies/:id', requireAuth, prodController.editRecipe);
+router.put('/smoothies/:id', requireAuth, editRecipe_post);
 
-router.delete('/smoothies/:id', requireAuth, prodController.deleteRecipe);
+router.delete('/smoothies/:id', requireAuth,deleteRecipe);
 
 module.exports = router;

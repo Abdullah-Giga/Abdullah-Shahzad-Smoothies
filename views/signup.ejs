@@ -44,8 +44,12 @@
       const data = await res.json();
       // If any error occurs this will display it on UI under the mail or password fields
       if (data.errors) {
-        emailError.textContent = data.errors.email;
-        passwordError.textContent = data.errors.password;
+
+        if(data.errors.includes('password')){
+            passwordError.textContent = data.errors;
+        }else {
+        emailError.textContent = "This email already exists";
+        }
       }
       // After sign Up the user will be redirected to home page
       if (data.user) {

@@ -33,17 +33,24 @@
         headers: { "Content-Type": "application/json" },
       });
       const data = await res.json();
+      console.log(data);
       // If any error occurs this will display it on UI under the mail or password fields
       if (data.errors) {
-        emailError.textContent = data.errors.email;
-        passwordError.textContent = data.errors.password;
+
+        if (data.errors === "incorrect email") {
+          emailError.textContent = data.errors;
+  }
+  if (data.errors === "incorrect password") {
+    passwordError.textContent = data.errors;
+  }
+        
       }
       // After sign Up the user will be redirected to home page
       if (data.user) {
         location.assign("/");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   });
 </script>
